@@ -1,22 +1,12 @@
-// Section.js
 import React from 'react';
 import Task from './Task';
-import { useDrop } from 'react-dnd';
 
-const Section = ({ title, tasks, onMove, status }) => {
-  const [{ isOver }, drop] = useDrop(() => ({
-    accept: 'TASK',
-    drop: (item) => onMove(item.id, status),
-    collect: (monitor) => ({
-      isOver: !!monitor.isOver(),
-    }),
-  }), [status]);
-
+const Section = ({ title, tasks, onMove, onDelete }) => {
   return (
-    <div ref={drop} className={`w-1/3 p-4 ${isOver ? 'bg-blue-100' : ''}`}>
+    <div className="w-full md:w-1/3 p-4"> {/* Adjust width for responsiveness */}
       <h2 className="text-2xl font-bold mb-4">{title}</h2>
       {tasks.map(task => (
-        <Task key={task.id} task={task} />
+        <Task key={task.id} task={task} onMove={onMove} onDelete={onDelete} /> // Pass onDelete prop to Task
       ))}
     </div>
   );
